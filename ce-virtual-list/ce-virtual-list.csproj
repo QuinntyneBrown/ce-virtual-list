@@ -73,6 +73,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="dist\virtual-list.js" />
     <Content Include="index.html" />
     <Content Include="packages.config" />
     <Content Include="src\virtual-list.component.html">
@@ -84,6 +85,7 @@
     <Content Include="webpack.config.js" />
     <Content Include="package.json" />
     <Content Include="tsconfig.json" />
+    <Content Include="dist\virtual-list.js.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -99,6 +101,8 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <TypeScriptCompile Include="src\constants.ts" />
+    <TypeScriptCompile Include="src\virtual-list-source.ts" />
     <TypeScriptCompile Include="src\virtual-list.component.ts" />
   </ItemGroup>
   <ItemGroup>

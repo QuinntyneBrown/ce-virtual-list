@@ -96,9 +96,50 @@ const htmlTemplate = __webpack_require__(0);
 const styles = __webpack_require__(1);
 const template = document.createElement("template");
 template.innerHTML = `${htmlTemplate}<style>${styles}</style>`;
-class VirtualForComponent extends HTMLElement {
-    constructor() {
+class VirtualListComponent extends HTMLElement {
+    constructor(_scroller, _source, _document = document, _window = window) {
         super();
+        this._scroller = _scroller;
+        this._source = _source;
+        this._document = _document;
+        this._window = _window;
+        this.anchorItem = {
+            index: 0,
+            offset: 0
+        };
+        this._firstAttachedItem = 0;
+        this._lastAttachedItem = 0;
+        this._anchorScrollTop = 0;
+        this._tombstoneSize = 0;
+        this._tombstoneWidth = 0;
+        this._tombstones = [];
+        this._loadedItems = 0;
+        this._requestInProgress = false;
+        this._scrollRunwayEnd = 0;
+        this._items = [];
+        this._onScroll = this._onScroll.bind(this);
+        this._onResize = this._onResize.bind(this);
+    }
+    fetch(count) {
+    }
+    createToombstone() {
+    }
+    render(item, div) {
+    }
+    _onScroll() {
+    }
+    _onResize() {
+        var tombstone = this._source.createTombstone();
+        tombstone.style.position = 'absolute';
+        this._scroller.appendChild(tombstone);
+        tombstone.classList.remove('invisible');
+        this._tombstoneSize = tombstone.offsetHeight;
+        this._tombstoneWidth = tombstone.offsetWidth;
+        this._scroller.removeChild(tombstone);
+        for (var i = 0; i < this._items.length; i++) {
+            this._items[i].height = this._items[i].width = 0;
+        }
+        this._onScroll();
     }
     static get observedAttributes() {
         return [];
@@ -111,9 +152,21 @@ class VirtualForComponent extends HTMLElement {
     }
     _bind() {
         return __awaiter(this, void 0, void 0, function* () {
+            this._scrollRunway = this._document.createElement('div');
+            this._scrollRunway = document.createElement('div');
+            this._scrollRunway.textContent = ' ';
+            this._scrollRunwayEnd = 0;
+            this._scrollRunway.style.position = 'absolute';
+            this._scrollRunway.style.height = '1px';
+            this._scrollRunway.style.width = '1px';
+            this._scrollRunway.style.transition = 'transform 0.2s';
+            this._scroller.appendChild(this._scrollRunway);
+            this._onResize();
         });
     }
     _setEventListeners() {
+        this._scroller.addEventListener('scroll', this._onScroll);
+        this._window.addEventListener('resize', this._onResize);
     }
     disconnectedCallback() {
     }
@@ -124,9 +177,9 @@ class VirtualForComponent extends HTMLElement {
         }
     }
 }
-/* harmony export (immutable) */ __webpack_exports__["VirtualForComponent"] = VirtualForComponent;
+/* harmony export (immutable) */ __webpack_exports__["VirtualListComponent"] = VirtualListComponent;
 
-customElements.define(`ce-virtual-list`, VirtualForComponent);
+customElements.define(`ce-virtual-list`, VirtualListComponent);
 
 
 /***/ })

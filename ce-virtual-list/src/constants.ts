@@ -1,0 +1,6 @@
+﻿export const constants = {
+    RUNWAY_ITEMS : 50,
+    RUNWAY_ITEMS_OPPOSITE: 10,
+    SCROLL_RUNWAY: 2000,
+    ANIMATION_DURATION_MS : 200
+};
